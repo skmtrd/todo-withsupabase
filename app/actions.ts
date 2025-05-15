@@ -29,8 +29,10 @@ export const signUpAction = async (formData: FormData) => {
 	});
 
 	if (error) {
+		// biome-ignore lint/style/useTemplate: <explanation>
 		console.error(error.code + " " + error.message);
 		return encodedRedirect("error", "/sign-up", error.message);
+	// biome-ignore lint/style/noUselessElse: <explanation>
 	} else {
 		return encodedRedirect(
 			"success",

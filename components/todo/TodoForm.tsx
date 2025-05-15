@@ -40,7 +40,7 @@ export const TodoForm = () => {
 					onChange={(e) => setTitle(e.target.value)}
 				/>
 				<Input type="file" accept="image/*" onChange={handleImageChange} />
-				<Button type="submit" disabled={isPending}>
+				<Button type="submit" disabled={isPending || !title.trim()}>
 					{isPending ? "追加中..." : "タスクを追加"}
 				</Button>
 			</form>
