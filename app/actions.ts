@@ -232,3 +232,24 @@ export const deleteTodo = async (id: string) => {
 		alert((error as Error).message);
 	}
 };
+
+export const updateProfile = async (username: string) => {
+	try {		
+		const supabase = await createClient();
+		const { data: { user } } = await supabase.auth.getUser();
+
+		if (!user) throw new Error("ユーザーが見つかりません");
+
+		const { error } = await supabase
+			.from("profiles")
+			.update({ username })
+			.eq("id", user.id);
+
+		if (error) throw error;
+
+		return redirect("/todo");
+	} catch (error) {
+		console.error("Error updating profile:", error);
+		throw error;
+	}
+};

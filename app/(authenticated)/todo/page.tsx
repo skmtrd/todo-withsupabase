@@ -1,8 +1,8 @@
+import { getTodos } from "@/app/actions";
 import { TodoForm } from "@/components/todo/TodoForm";
 import { TodoItem } from "@/components/todo/TodoItem";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import { getTodos } from "../actions";
 
 export type Todo = {
 	id: string;
@@ -14,7 +14,7 @@ export type Todo = {
 	user_id: string;
 };
 
-export default async function ProtectedPage() {
+export default async function TodoPage() {
 	const supabase = await createClient();
 
 	const {
@@ -26,8 +26,6 @@ export default async function ProtectedPage() {
 	}
 
 	const todos = await getTodos();
-
-	console.log(todos);
 
 	return (
 		<div className="flex-1 w-full flex flex-col gap-6">
