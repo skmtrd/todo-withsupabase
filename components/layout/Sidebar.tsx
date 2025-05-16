@@ -1,5 +1,8 @@
 import { SideBarAction } from "@/components/layout/SideBarAction";
 import { SidebarLink } from "@/components/layout/SidebarLink";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
+import { SidebarProfileLink } from "./SidebarProfileLink";
 
 const navItems = [
 	{ href: "/todo", label: "タイムライン", icon: "Home" },
@@ -35,7 +38,17 @@ const actionButtons = [
 	},
 ];
 
-export default function Sidebar() {
+export default async function Sidebar() {
+	const supabase = await createClient();
+
+	const { data: profile } = await supabase
+		.from("profiles")
+		.select("*")
+		.single();
+
+	if (!profile) {
+		return redirect("/sign-in");
+	}
 	return (
 		<aside className="w-16 md:w-72 py-2 px-3 md:px-4 space-y-3 border-r border-foreground-500 flex flex-col transition-all duration-300 ease-in-out">
 			<nav className="space-y-1">
@@ -64,10 +77,10 @@ export default function Sidebar() {
 
 			<hr className="border-foreground-500" />
 
-			<SidebarLink
+			<SidebarProfileLink
 				href="/profile/edit"
 				label="プロフィール"
-				icon="UserCircle"
+				avatar_url={profile.avatar_url}
 			/>
 			<div className="space-y-2 px-0 md:px-1 flex flex-col items-center">
 				{actionButtons.map((button) => (
