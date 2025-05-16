@@ -1,7 +1,7 @@
 "use client";
 
+import type { Todo } from "@/app/(authenticated)/todo/page";
 import { deleteTodo } from "@/app/actions";
-import type { Todo } from "@/app/protected/page";
 import { Trash2 } from "lucide-react";
 import { useTransition } from "react";
 import { Button } from "../ui/button";
